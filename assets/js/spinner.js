@@ -5,7 +5,7 @@ var Spinner = function() {
     return Math.floor(Math.random() * (high - low + 1) + low);
     }
     var randomBonus = function() {
-        var low = 0, high = 1;
+        var low = 0, high = 0;
     return Math.floor(Math.random() * (high - low + 1) + low);
     }
 
