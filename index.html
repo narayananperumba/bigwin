@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
   <title>Bigwin</title>
@@ -5,12 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="assets/css/style.css">
   <script src="/socket.io/socket.io.js"></script>
+  <script src="assets/js/jquery.js"></script>
   <script src="assets/js/init.js"></script>
 </head>
 <body>
   <div class="app-container">
     <div class="welcome">Welcome to Bigwin game</div>
     <div class="page">
+      <div class="left">
       <div class="results active" id="results">Click to play</div>
       <div class="spinner-container" id="spinner-container">
         <div class="spinner first" id="spinnerX"></div>
@@ -18,9 +21,19 @@
         <div class="spinner third" id="spinnerZ"></div>
       </div>
       <div class="button-container">
-        <div class="button" id="button"></div>
-      </div>  
+        <div class="button" id="button">Click Me!</div>
+      </div>
     </div>
+    <div class="right">
+    <div><div class="addUser"></div><div class="users" id="users"></div></div>
+
+     <form action="">
+      <input id="name" autocomplete="off" placeholder="Please enter your name here.."/>
+      <button id="send">Send</button>
+    </form>
+
+  </div>
+  </div>
   </div>
 </body>
 </html>
