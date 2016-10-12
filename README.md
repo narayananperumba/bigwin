@@ -11,7 +11,13 @@ Install the npm packages described in the `package.json`.
 
 ## Run the application
 - node app.js
-- http://127.0.0.1:8125/ (open in browser)
+- http://127.0.0.1:8888/ (open in browser)
+
+## How to play
+- open in multiple browsers or devices
+- fill your name in the text box provided
+- add user name as "admin" in one window to get the "click me" button
+- many can join and place their prediction, admin while controll the spin by clicking the button and will show up the results
 
 ## Run test
 - npm test
@@ -27,3 +33,4 @@ Tried to implement unit test cases with Mocha-Chai libraries and basic test case
 
 The application is tested in Chrome V49.0.2623, Firefox 46.0.1, Device emulator in chrome (iPhone-5-6-6p, iPad, Nexus 5, Galaxy 5, etc ).
 
+ HAVE FUN and LET ME KNOW HOW ALL I CAN IMPROVE
