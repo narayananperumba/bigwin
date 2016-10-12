@@ -1,68 +1,45 @@
-var app = require('http').createServer(handler),
-io = require('socket.io').listen(app),
-fs = require('fs'),
-path = require('path'),
-sp = require("./assets/js/spinner").Spinner
 
-app.listen(8125);
+var express =require('express');
+var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
-function handler(request, response) {
+var fs = require('fs');
+var path = require('path');
+var sp = require("./assets/js/spinner").Spinner;
+var Moniker = require('moniker');
 
-    var filePath = '.' + request.url;
-    if (filePath == './')
-        filePath = './index.html';
+app.use(express.static(path.join(__dirname, '/')));
 
-    var extname = String(path.extname(filePath)).toLowerCase();
-    var contentType = 'text/html';
-    var mimeTypes = {
-        '.html': 'text/html',
-        '.js': 'text/javascript',
-        '.css': 'text/css',
-        '.json': 'application/json',
-        '.png': 'image/png',
-        '.jpg': 'image/jpg',
-        '.gif': 'image/gif',
-        '.wav': 'audio/wav',
-        '.mp4': 'video/mp4',
-        '.woff': 'application/font-woff',
-        '.ttf': 'applilcation/font-ttf',
-        '.eot': 'application/vnd.ms-fontobject',
-        '.otf': 'application/font-otf',
-        '.svg': 'application/image/svg+xml'
-    };
+http.listen(8888, function(){
+  console.log('listening on *:8888');
+});
 
-    contentType = mimeTypes[extname] || 'application/octect-stream';
+app.get('/', function(req, res){
+  res.sendFile(__dirname + '/index.html');
+});
 
-    fs.readFile(filePath, function(error, content) {
-        if (error) {
-            if(error.code == 'ENOENT'){
-                fs.readFile('./404.html', function(error, content) {
-                    response.writeHead(200, { 'Content-Type': contentType });
-                    response.end(content, 'utf-8');
-                });
-            }
-            else {
-                response.writeHead(500);
-                response.end('Sorry, Error: '+error.code+' occured..\n');
-                response.end();
-            }
-        }
-        else {
-            response.writeHead(200, { 'Content-Type': contentType });
-            response.end(content, 'utf-8');
-        }
-    }); 
-
-}
 
 var updateSpinners = function(spinner) {
+    spinner.sXI= "fr_"+spinner.sX+".png";
+    spinner.sYI= "fr_"+spinner.sY+".png";
+    spinner.sZI= "fr_"+spinner.sZ+".png";
     io.sockets.emit("spinners", { spinner });
 }
 
+
 io.sockets.on('connection', function (socket) {
+    var user = addUser();
     var newSp = new sp();
     var spin = [];
     var bonusCnt = 0;
+
+    socket.on('send', function(data){
+    io.emit('addPlayer', data);    
+    io.to(socket.id).emit('player', data);
+    io.to(socket.id).emit('clearform', data);
+    });
+
     socket.on("click", function() {
         spin = newSp.runSpinner();
         updateSpinners(spin);
@@ -73,10 +50,8 @@ io.sockets.on('connection', function (socket) {
         setTimeout(function(){showResults(spin,bonusCnt);}, 250);    //show result after 250ms
     });
 
-    socket.on("init", function() {
-        spin = newSp.runSpinner();
-        updateSpinners(spin);
-    });
+
+    socket.on('disconnect', function(){ removeUser(user); });
 });
 
 var showResults = function(spin,bonusCnt){
@@ -89,4 +64,35 @@ var showResults = function(spin,bonusCnt){
     
 }
 
-console.log('Server running at http://127.0.0.1:8125/');
+
+var users = [];
+
+var addUser = function() {
+    //name: Moniker.choose(),
+    var user = {
+        name: Moniker.choose(),
+        clicks: 0
+    }
+    users.push(user);
+    updateUsers();
+    return user;
+}
+var removeUser = function(user) {
+    for(var i=0; i<users.length; i++) {
+        if(user.name === users[i].name) {
+            users.splice(i, 1);
+            updateUsers();
+            return;
+        }
+    }
+}
+var updateUsers = function() {
+    var str = '';
+    /*for(var i=0; i<users.length; i++) {
+        var user = users[i];
+        str += user.name + '';
+    }*/
+    io.sockets.emit("users", { users: users });
+}
+
+console.log('Server running at http://127.0.0.1:8888/');
