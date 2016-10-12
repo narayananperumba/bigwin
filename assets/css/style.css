@@ -1,3 +1,4 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
 html, body, div, span, img{
     margin:0;
     padding:0;
@@ -11,23 +12,29 @@ body{
     font-family: verdana, sans-serif;
     line-height: 1;
     background: #fff;
+    background: url('/assets/img/bg.jpg') no-repeat;
+    background-size: cover;
 }
 .button{
     color: #fff;
-    background: url('/assets/img/button.png') no-repeat;
-    background-size: contain;
-    background-position: center center;
+    background: #8BC34A;
     cursor: pointer;
     margin: 0px auto;
     margin-top: 10px;
     text-align: center;
-    width: 15vw;
-    height: 15vh;
     transition: all 0.5s ease;
     position: absolute;
     right: 0;
     left: 0;
     top: 60vh;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 3px;
+    width: 50vw;
+    height: auto;
+    letter-spacing: 2px;
+    display: none;
 }
 .button:hover{
     -webkit-transform: scale(1.05);
@@ -55,8 +62,8 @@ body{
 .spinner-container .spinner{
     display: inline-block;
     text-align: center;
-    width: 25vw;
-    height: 15vw;
+    width: 20vw;
+    height: 20vw;
     margin: 10px;
 }
 .spinner-container .spinner img{
@@ -93,6 +100,7 @@ body{
 }
 .results.active, .spinner-container.active img {
     opacity: 1;
+    border-radius: 10px;
 }
 .big-win{
     color: #E48A2B;
@@ -106,4 +114,45 @@ body{
 .bonus{
     font-size: 0.5em;
     padding-top: 0.3em;
+}
+.page .left{
+    width: 100vw;
+    display: block;
+    position: relative;
+    background: #ccc;
+}
+.page .right{
+    width: 100vw;
+    display: block;
+    position: absolute;
+    background: rgb(255,255,255,0.37);
+    bottom: 2%;
+    right : 0;
+    left: 0;
+}
+.users{
+    display: table;
+    text-align: center;
+    margin: 0px auto;
+    color:#fff;
+}
+
+form { background: #fff; padding: 3px; bottom: 0; text-align: center;}
+form input { background: #e0e0e0; border: 1px solid #ccc; padding: 10px; width: 70%; margin-right: .5%; outline: none;}
+form button { background: #4A7D32; border: none; padding: 10px; color:#fff; font-weight: bold;}
+#messages { list-style-type: none; margin: 0; padding: 0; }
+#messages li { padding: 5px 10px; }
+#messages li:nth-child(odd) { background: #eee; }
+.radio{
+    margin: 10px;
+}
+.tbl-raw{
+    display: table-row;
+    border: 1px solid #ccc;
+}
+.tbl-raw span{
+    display: table-cell;
+    border: 1px solid #e4e4e4;
+    padding: 5px;
+    text-align: center;
 }
