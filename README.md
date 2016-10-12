@@ -17,7 +17,7 @@ Install the npm packages described in the `package.json`.
 - open in multiple browsers or devices
 - fill your name in the text box provided
 - add user name as "admin" in one window to get the "click me" button
-- many can join and place their prediction, admin while controll the spin by clicking the button and will show up the results
+- many can join and place their prediction, admin can controll the spin by pressing the button and will show up the results according to user selections
 
 ## Run test
 - npm test
